@@ -244,8 +244,14 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
         if let size = itemView.image?.size , size != CGSize.zero {
 
             let aspectFitItemSize = aspectFitSize(forContentOfSize: size, inBounds: self.scrollView.bounds.size)
-
-            itemView.bounds.size = aspectFitItemSize
+            if scrollView.bounds.size.width > size.width,
+                scrollView.bounds.size.height > size.height
+            {
+                itemView.bounds.size = size
+            }
+            else {
+                itemView.bounds.size = aspectFitItemSize
+            }
             scrollView.contentSize = itemView.bounds.size
 
             itemView.center = scrollView.boundsCenter
